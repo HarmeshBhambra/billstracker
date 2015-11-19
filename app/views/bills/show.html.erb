@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h3>Bill #<%= @bill.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Image</dt>
+      <dd><%= @bill.image %></dd>
+
+      <dt>User</dt>
+      <dd><%= @bill.user_id %></dd>
+
+      <dt>Notes</dt>
+      <dd><%= @bill.notes %></dd>
+
+      <dt>Recurring</dt>
+      <dd><%= @bill.recurring %></dd>
+
+      <dt>Due at</dt>
+      <dd><%= @bill.due_at %></dd>
+
+      <dt>Amount</dt>
+      <dd><%= @bill.amount %></dd>
+
+      <dt>Category</dt>
+      <dd><%= @bill.category %></dd>
+
+      <dt>Company</dt>
+      <dd><%= @bill.company %></dd>
+
+      <dt>Name</dt>
+      <dd><%= @bill.name %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/bills" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/bills/<%= @bill.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_bill/<%= @bill.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

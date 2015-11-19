@@ -1,0 +1,124 @@
+<!-- Validation failure messages -->
+<% if @bill.errors.any? %>
+  <% @bill.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Bill</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_bill" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user %>">
+      </div>
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Bill Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @bill.name %>">
+      </div>
+
+      <!-- Label and input for category -->
+      <div class="form-group">
+        <label for="category" class="control-label">
+          Category
+        </label>
+        <select class="form-control" id="category" name="category" placeholder="Category" class="form-control">
+          <option>Booth</option>
+          <option>Communication</option>
+          <option>Misc</option>
+          <option>Travel</option>
+          <option>Utilities</option>
+        </select>
+      </div>
+
+      <!-- Label and input for company -->
+      <div class="form-group">
+        <label for="company" class="control-label">
+          Company
+        </label>
+
+        <input type="text" id="company" name="company" placeholder="Company" class="form-control" value="<%= @bill.company %>">
+      </div>
+
+      <!-- Label and input for amount -->
+      <div class="form-group">
+        <label for="amount" class="control-label">
+          Amount
+        </label>
+        <div class="input-group">
+          <div class="input-group-addon">$</div>
+          <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @bill.amount %>">
+          <div class="input-group-addon">.00</div>
+        </div>
+     </div>
+
+      <!-- Label and input for recurring -->
+      <div class="form-group">
+        <label for="recurring" class="control-label">
+          Recurring (Yes or No?)
+        </label>
+        <div>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="yes" value="yes"> Yes
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="no" value="no"> No
+          </label>
+        </div>
+      </div>
+
+      <!-- Label and input for due_at -->
+      <div class="form-group">
+        <label for="due_at" class="control-label">
+          Due at
+        </label>
+
+        <div class="input-group date datetimepicker">
+            <input name="due_at" type="text" class="form-control" id="due_at">
+            <span class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </span>
+          </div>
+      </div>
+
+      <!-- Label and input for image -->
+      <div class="form-group">
+        <label for="image" class="control-label">
+          Image (URL)
+        </label>
+
+        <input type="text" id="image" name="image" placeholder="Image" class="form-control" value="<%= @bill.image %>">
+      </div>
+
+      <!-- Label and input for notes -->
+      <div class="form-group">
+        <label for="notes" class="control-label">
+          Notes
+        </label>
+
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @bill.notes %></textarea>
+      </div>
+
+      <button class="btn btn-success">
+        Create Bill
+      </button>
+      or
+      <a href="/bills">Cancel</a>
+    </form>
+  </div>
+</div>

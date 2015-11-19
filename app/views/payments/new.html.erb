@@ -1,0 +1,55 @@
+<!-- Validation failure messages -->
+<% if @payment.errors.any? %>
+  <% @payment.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Payment</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_payment" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for paid_at -->
+      <div class="form-group">
+        <label for="paid_at" class="control-label">
+          Paid at
+        </label>
+
+        <input type="text" id="paid_at" name="paid_at" placeholder="Paid at" class="form-control" value="<%= @payment.paid_at %>">
+      </div>
+
+      <!-- Label and input for amount_paid -->
+      <div class="form-group">
+        <label for="amount_paid" class="control-label">
+          Amount paid
+        </label>
+
+        <input type="text" id="amount_paid" name="amount_paid" placeholder="Amount paid" class="form-control" value="<%= @payment.amount_paid %>">
+      </div>
+
+      <!-- Label and input for bill_id -->
+      <div class="form-group">
+        <label for="bill_id" class="control-label">
+          Bill
+        </label>
+
+        <input type="text" id="bill_id" name="bill_id" placeholder="Bill" class="form-control" value="<%= @payment.bill_id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Payment
+      </button>
+      or
+      <a href="/payments">Cancel</a>
+    </form>
+  </div>
+</div>
