@@ -4,17 +4,23 @@
   </h1>
 </div>
 
-<div class="btn-group dropdown">
-  <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdown_month">
-    Month <span class="caret"></span>
+<div class="dropdown">
+  <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Month
+    <span class="caret"></span>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown_month">
-    <li>November</li>
-    <li>December</li>
-    <li>January</li>
+  <ul class="dropdown-menu" aria-labelledby="dLabel">
+    <li>
+      November
+    </li>
+    <li>
+      December
+    </li>
+    <li>
+      January
+    </li>
   </ul>
 </div>
-
 
 <div class="row">
   <div class="col-md-12">
@@ -33,32 +39,97 @@
         <%= @n + 1 %>
         </td>
         <td>
-          <% if bill.due_at.day.between?(1, 7) %>
-          <%= bill.name %>
+          <% if @week_1_bills.include? bill %>
+          <p>
+            <h3>
+              <%= bill.name %>
+            </h3>
+            <a>
+              <%= bill.amount %>
+            </a>
+          </p>
           <% end %>
         </td>
         <td>
-          <% if bill.due_at.day.between?(8, 14) %>
-          <%= bill.name %>
+          <% if @week_2_bills.include? bill %>
+          <p>
+            <h3>
+              <%= bill.name %>
+            </h3>
+            <a>
+              <%= bill.amount %>
+            </a>
+          </p>
           <% end %>
         </td>
         <td>
-          <% if bill.due_at.day.between?(15, 21) %>
-          <%= bill.name %>
+          <% if @week_3_bills.include? bill %>
+          <p>
+            <h3>
+              <%= bill.name %>
+            </h3>
+            <a>
+              <%= bill.amount %>
+            </a>
+          </p>
           <% end %>
         </td>
         <td>
-          <% if bill.due_at.day.between?(22, 28) %>
-          <%= bill.name %>
+          <% if @week_4_bills.include? bill %>
+          <p>
+            <h3>
+              <%= bill.name %>
+            </h3>
+            <a>
+              <%= bill.amount %>
+            </a>
+          </p>
           <% end %>
         </td>
         <td>
-          <% if bill.due_at.day.between?(29, 31) %>
-          <%= bill.name %>
+          <% if @week_5_bills.include? bill %>
+          <p>
+            <h3>
+              <%= bill.name %>
+            </h3>
+            <a>
+              <%= bill.amount %>
+            </a>
+          </p>
           <% end %>
         </td>
       </tr>
-      <% end %>
+        <% @n = @n + 1 %>
+        <% end %>
+      <tr>
+        <td>
+          Subtotal
+        </td>
+        <td>
+          <div><%= @week_1_bills.map{|item| item.amount}.sum %></div>
+        </td>
+        <td>
+          <div><%= @week_2_bills.map{|item| item.amount}.sum %></div>
+        </td>
+        <td>
+          <div><%= @week_3_bills.map{|item| item.amount}.sum %></div>
+        </td>
+        <td>
+          <div><%= @week_4_bills.map{|item| item.amount}.sum %></div>
+        </td>
+        <td>
+          <div><%= @week_5_bills.map{|item| item.amount}.sum %></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td colspan="5" class="total">
+          <div><%= @bills.map{|item| item.amount}.sum %></div>
+        </td>
+      </tr>
     </table>
+
   </div>
 </div>

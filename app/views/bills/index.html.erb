@@ -23,7 +23,7 @@
 
       <% @bills.each do |bill| %>
       <tr>
-        <td><%= bill.image %></td>
+        <td><img src="<%= bill.image %>" class="img-responsive"></td>
         <td><%= bill.user_id %></td>
         <td><%= bill.notes %></td>
         <td><%= bill.recurring %></td>
