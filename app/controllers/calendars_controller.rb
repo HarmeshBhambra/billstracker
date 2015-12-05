@@ -1,7 +1,8 @@
 class CalendarsController < ApplicationController
 
   def index
-    @bills = Bill.all
+    @q = Bill.ransack(params[:q])
+    @bills = @q.result
 
     @n = 0
 
@@ -14,5 +15,9 @@ class CalendarsController < ApplicationController
     @week_4_bills = @bills.select{|bill| bill.due_at.day.between?(22, 28)}
 
     @week_5_bills = @bills.select{|bill| bill.due_at.day.between?(29, 31)}
+
+    @month = params[:month]
+
+    @bills_in_month = @bills.select{|bill| bill.due_at.mon == @month}
   end
 end

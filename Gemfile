@@ -4,6 +4,8 @@ gem 'carrierwave'
 
 gem 'starter_generators', :git => "http://github.com/rbetina/starter_generators.git"
 
+gem 'ransack'
+
 gem 'devise'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
