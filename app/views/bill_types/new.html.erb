@@ -1,0 +1,37 @@
+<!-- Validation failure messages -->
+<% if @bill_type.errors.any? %>
+  <% @bill_type.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Bill Type</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_bill_type" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for type -->
+      <div class="form-group">
+        <label for="type" class="control-label">
+          Bill Types
+        </label>
+
+        <input type="text" id="type" name="type" placeholder="type" class="form-control">
+      </div>
+
+      <button class="btn btn-success">
+        Create Bill Type
+      </button>
+      or
+      <a href="/bill_types">Cancel</a>
+    </form>
+  </div>
+</div>

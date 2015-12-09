@@ -1,38 +1,116 @@
 <div class="page-header">
-  <h3>Bill #<%= @bill.id %></h3>
+  <h3><%= @bill.name %></h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
     <dl class="dl-horizontal">
-      <dt>Image</dt>
-      <dd><img src="<%= @bill.image %>" class="img-responsive"></dd>
-
-      <dt>User</dt>
-      <dd><%= @bill.user_id %></dd>
-
-      <dt>Notes</dt>
-      <dd><%= @bill.notes %></dd>
-
-      <dt>Recurring</dt>
-      <dd><%= @bill.recurring %></dd>
 
       <dt>Due at</dt>
-      <dd><%= @bill.due_at %></dd>
+      <dd><%= @bill.due_at.strftime('%B %e, %Y') %></dd>
 
       <dt>Amount</dt>
-      <dd><%= @bill.amount %></dd>
+      <dd><%= number_to_currency(@bill.amount) %></dd>
 
       <dt>Category</dt>
-      <dd><%= @bill.category %></dd>
+      <dd><%= @bill.category.name %></dd>
 
       <dt>Company</dt>
       <dd><%= @bill.company %></dd>
 
-      <dt>Name</dt>
-      <dd><%= @bill.name %></dd>
+      <dt>Image</dt>
+      <dd>
+        <a href="/bills/<%= @bill.id %>/image">Click here to see the image</a>
+      </dd>
+
+      <dt>Recurring</dt>
+      <dd><%= @bill.recurring %></dd>
+
+      <dt>Notes</dt>
+      <dd><%= @bill.notes %></dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Percentage Paid</dt>
+      <dd>
+        <% if @bill.payments.map{|item| item.amount_paid}.sum == 0 %>
+        N/A
+        <% else %>
+        <%= number_to_percentage(@percentage_paid*100, precision: 0) %>
+        <% end %>
+      </dd>
+
+      <dt>Payments</dt>
+      <dd>
+       <% if @bill.payments.map{|item| item.amount_paid}.sum == 0 %>
+       None
+       <% else %>
+       <ul>
+        <% @bill.payments.each do |payment| %>
+          <li>
+            <a href="/payments/<%= payment.id %>"><%= number_to_currency(payment.amount_paid) %></a>
+            (<%= payment.paid_at.strftime('%B %e, %Y') %>)
+          </li>
+        <% end %>
+        </ul>
+        <% end %>
+      </dd>
 
     </dl>
+  </div>
+</div>
+
+    <hr>
+
+    <div>
+    <form action="/create_payment" method="post">
+      <p> Add Payment </p>
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for paid_at -->
+      <div class="form-group">
+        <label for="paid_at" class="control-label">
+          Date Paid
+        </label>
+        <div class='input-group date' id='datetimepicker1'>
+          <input type="text" id="paid_at" name="paid_at" placeholder="When did you pay?" class="form-control">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Label and input for amount_paid -->
+      <div class="form-group">
+        <label for="amount_paid" class="control-label">
+          Amount Paid
+        </label>
+      <div class="input-group">
+        <div class="input-group-addon">$</div>
+        <input type="text" id="amount_paid" name="amount_paid" placeholder="What amount did you pay?" class="form-control" required>
+      </div>
+      </div>
+
+      <!-- Label and input for bill_id -->
+      <input name="bill_id" type="hidden" value="<%= @bill.id %>">
+
+      <button class="btn btn-success">
+        Create Payment
+      </button>
+      or
+      <a href="/">Cancel</a>
+
+    </form>
+    </div>
+
+    <hr>
 
     <div class="btn-group btn-group-justified">
       <a href="/bills" class="btn btn-primary">
@@ -47,3 +125,9 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+  });
+</script>

@@ -9,7 +9,7 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Edit Bill #<%= @bill.id %></h3>
+  <h3>Edit Bill: '<%= @bill.name %>'</h3>
 </div>
 
 <div class="row">
@@ -18,67 +18,28 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for image -->
-      <div class="form-group">
-        <label for="image" class="control-label">
-          Image
-        </label>
-
-        <input type="file" id="image" name="image" placeholder="Image" class="form-control" value="<%= @bill.image %>">
-      </div>
-
       <!-- Label and input for user_id -->
       <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @bill.user_id %>">
+        <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
       </div>
 
-      <!-- Label and input for notes -->
+      <!-- Label and input for name -->
       <div class="form-group">
-        <label for="notes" class="control-label">
-          Notes
+        <label for="name" class="control-label">
+          Bill Name
         </label>
 
-        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @bill.notes %></textarea>
-      </div>
-
-      <!-- Label and input for recurring -->
-      <div class="form-group">
-        <label for="recurring" class="control-label">
-          Recurring
-        </label>
-
-        <input type="text" id="recurring" name="recurring" placeholder="Recurring" class="form-control" value="<%= @bill.recurring %>">
-      </div>
-
-      <!-- Label and input for due_at -->
-      <div class="form-group">
-        <label for="due_at" class="control-label">
-          Due at
-        </label>
-
-        <input type="text" id="due_at" name="due_at" placeholder="Due at" class="form-control" value="<%= @bill.due_at %>">
-      </div>
-
-      <!-- Label and input for amount -->
-      <div class="form-group">
-        <label for="amount" class="control-label">
-          Amount
-        </label>
-
-        <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @bill.amount %>">
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @bill.name %>">
       </div>
 
       <!-- Label and input for category -->
       <div class="form-group">
-        <label for="category" class="control-label">
+        <label for="category_id" class="control-label">
           Category
         </label>
 
-        <input type="text" id="category" name="category" placeholder="Category" class="form-control" value="<%= @bill.category %>">
+        <%= select_tag(:category_id, options_from_collection_for_select(Category.all, :id, :name, @bill.category_id), :class => "form-control") %>
+        <a href="/categories/new">or add a new category</a>
       </div>
 
       <!-- Label and input for company -->
@@ -90,20 +51,75 @@
         <input type="text" id="company" name="company" placeholder="Company" class="form-control" value="<%= @bill.company %>">
       </div>
 
-      <!-- Label and input for name -->
+      <!-- Label and input for amount -->
       <div class="form-group">
-        <label for="name" class="control-label">
-          Name
+        <label for="amount" class="control-label">
+          Amount
         </label>
+        <div class="input-group">
+          <div class="input-group-addon">$</div>
+          <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @bill.amount %>">
+        </div>
+     </div>
 
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @bill.name %>">
+      <!-- Label and input for recurring -->
+      <div class="form-group">
+        <label for="recurring" class="control-label">
+          Recurring (Yes or No?)
+        </label>
+        <div>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="yes" value="yes"> Yes
+          </label>
+          <label class="checkbox-inline">
+            <input type="checkbox" id="no" value="no"> No
+          </label>
+        </div>
       </div>
 
-      <button class="btn btn-warning">
-        Update Bill
+      <!-- Label and input for due_at -->
+      <div class="form-group">
+        <label for="due_at" class="control-label">
+          Due at
+        </label>
+
+        <div class='input-group date' id='datetimepicker1'>
+          <input name="due_at" type="text" class="form-control" id="due_at">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Label and input for image -->
+      <div class="form-group">
+        <label for="image" class="control-label">
+          Image
+        </label>
+
+        <input type="file" id="image" name="image" placeholder="Image" class="form-control" value="<%= @bill.image %>">
+      </div>
+
+      <!-- Label and input for notes -->
+      <div class="form-group">
+        <label for="notes" class="control-label">
+          Notes
+        </label>
+
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @bill.notes %></textarea>
+      </div>
+
+      <button class="btn btn-success">
+        Edit Bill
       </button>
       or
-      <a href="/bills/<%= @bill.id %>">Cancel</a>
+      <a href="/bills">Cancel</a>
     </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+  });
+</script>

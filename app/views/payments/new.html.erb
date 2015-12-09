@@ -18,31 +18,49 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for paid_at -->
-      <div class="form-group">
-        <label for="paid_at" class="control-label">
-          Paid at
-        </label>
-
-        <input type="text" id="paid_at" name="paid_at" placeholder="Paid at" class="form-control" value="<%= @payment.paid_at %>">
-      </div>
-
       <!-- Label and input for amount_paid -->
       <div class="form-group">
         <label for="amount_paid" class="control-label">
           Amount paid
         </label>
 
-        <input type="text" id="amount_paid" name="amount_paid" placeholder="Amount paid" class="form-control" value="<%= @payment.amount_paid %>">
+        <div class="input-group">
+          <div class="input-group-addon">$</div>
+          <input type="text" id="amount_paid" name="amount_paid" placeholder="Amount paid" class="form-control" value="<%= @payment.amount_paid %>">
+        </div>
+      </div>
+
+      <!-- Label and input for paid_at -->
+      <div class="form-group">
+        <label for="paid_at" class="control-label">
+          Paid at
+        </label>
+
+        <div class='input-group date' id='datetimepicker1'>
+          <input type="text" id="paid_at" name="paid_at" placeholder="Paid at" class="form-control">
+          <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+          </span>
+        </div>
       </div>
 
       <!-- Label and input for bill_id -->
       <div class="form-group">
-        <label for="bill_id" class="control-label">
+        <label for="paid_at" class="control-label">
           Bill
         </label>
 
-        <input type="text" id="bill_id" name="bill_id" placeholder="Bill" class="form-control" value="<%= @payment.bill_id %>">
+        <%= select_tag(:bill_id, options_from_collection_for_select(Bill.all, :id, :name, @payment.bill_id), :class => "form-control") %>
+        <a href="/bills/new">or add a new bill</a>
+      </div>
+
+      <!-- Label and input for notes -->
+      <div class="form-group">
+        <label for="notes" class="control-label">
+          Notes
+        </label>
+
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"></textarea>
       </div>
 
       <button class="btn btn-success">
@@ -53,3 +71,10 @@
     </form>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  $(function () {
+    $('#datetimepicker1').datetimepicker();
+  });
+</script>

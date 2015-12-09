@@ -42,7 +42,17 @@
           Bill
         </label>
 
-        <input type="text" id="bill_id" name="bill_id" placeholder="Bill" class="form-control" value="<%= @payment.bill_id %>">
+        <%= select_tag(:bill_id, options_from_collection_for_select(Bill.all, :id, :name, @payment.bill_id), :class => "form-control") %>
+        <a href="/bills/new">or add a new bill</a>
+      </div>
+
+      <!-- Label and input for notes -->
+      <div class="form-group">
+        <label for="notes" class="control-label">
+          Notes
+        </label>
+
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @payment.notes %></textarea>
       </div>
 
       <button class="btn btn-warning">

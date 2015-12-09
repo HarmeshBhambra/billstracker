@@ -1,18 +1,20 @@
 <div class="page-header">
-  <h3>Payment #<%= @payment.id %></h3>
+  <h3>Payment for
+    <a href="/bills/<%= @payment.bill.id %>"><%= @payment.bill.name %></a>
+  </h3>
 </div>
 
 <div class="row">
   <div class="col-md-12">
     <dl class="dl-horizontal">
       <dt>Paid at</dt>
-      <dd><%= @payment.paid_at %></dd>
+      <dd><%= @payment.paid_at.strftime('%B %e, %Y') %></dd>
 
       <dt>Amount paid</dt>
-      <dd><%= @payment.amount_paid %></dd>
+      <dd><%= number_to_currency(@payment.amount_paid) %></dd>
 
-      <dt>Bill</dt>
-      <dd><%= @payment.bill_id %></dd>
+      <dt>Notes</dt>
+      <dd><%= @payment.notes %></dd>
 
     </dl>
 

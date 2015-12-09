@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151115201157) do
+ActiveRecord::Schema.define(version: 20151208152422) do
+
+  create_table "bill_types", force: :cascade do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
+  end
 
   create_table "bills", force: :cascade do |t|
     t.string   "image"
@@ -20,8 +26,14 @@ ActiveRecord::Schema.define(version: 20151115201157) do
     t.string   "recurring"
     t.datetime "due_at"
     t.float    "amount"
-    t.string   "category"
     t.string   "company"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "category_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -33,6 +45,7 @@ ActiveRecord::Schema.define(version: 20151115201157) do
     t.integer  "bill_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "notes"
   end
 
   create_table "users", force: :cascade do |t|

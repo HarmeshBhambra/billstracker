@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h3>Bill Type #<%= @bill_type.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/bill_types" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/bill_types/<%= @bill_type.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_bill_type/<%= @bill_type.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

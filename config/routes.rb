@@ -1,4 +1,38 @@
 Rails.application.routes.draw do
+  # Routes for the Category resource:
+  # CREATE
+  get "/categories/new", :controller => "categories", :action => "new"
+  post "/create_category", :controller => "categories", :action => "create"
+
+  # READ
+  get "/categories", :controller => "categories", :action => "index"
+  get "/categories/:id", :controller => "categories", :action => "show"
+
+  # UPDATE
+  get "/categories/:id/edit", :controller => "categories", :action => "edit"
+  post "/update_category/:id", :controller => "categories", :action => "update"
+
+  # DELETE
+  get "/delete_category/:id", :controller => "categories", :action => "destroy"
+  #------------------------------
+
+  # Routes for the Bill_type resource:
+  # CREATE
+  get "/bill_types/new", :controller => "bill_types", :action => "new"
+  post "/create_bill_type", :controller => "bill_types", :action => "create"
+
+  # READ
+  get "/bill_types", :controller => "bill_types", :action => "index"
+  get "/bill_types/:id", :controller => "bill_types", :action => "show"
+
+  # UPDATE
+  get "/bill_types/:id/edit", :controller => "bill_types", :action => "edit"
+  post "/update_bill_type/:id", :controller => "bill_types", :action => "update"
+
+  # DELETE
+  get "/delete_bill_type/:id", :controller => "bill_types", :action => "destroy"
+  #------------------------------
+
   # Routes for the Calendar resource:
   get "/", :controller => "calendars", :action => "index"
 
@@ -34,6 +68,9 @@ Rails.application.routes.draw do
 
   # DELETE
   get "/delete_bill/:id", :controller => "bills", :action => "destroy"
+
+  # BILL IMAGE
+  get "/bills/:id/image", :controller => "bills", :action => "image"
   #------------------------------
 
   devise_for :users
