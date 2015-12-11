@@ -20,7 +20,11 @@
 
       <dt>Image</dt>
       <dd>
-        <a href="/bills/<%= @bill.id %>/image">Click here to see the image</a>
+        <% if @bill.image.present? %>
+          <a href="/bills/<%= @bill.id %>/image">Click here to see the image</a>
+        <% else %>
+          <p>No Image</p>
+        <% end %>
       </dd>
 
       <dt>Recurring</dt>
@@ -48,10 +52,10 @@
 
       <dt>Payments</dt>
       <dd>
-       <% if @bill.payments.map{|item| item.amount_paid}.sum == 0 %>
-       None
-       <% else %>
-       <ul>
+        <% if @bill.payments.map{|item| item.amount_paid}.sum == 0 %>
+        None
+        <% else %>
+        <ul>
         <% @bill.payments.each do |payment| %>
           <li>
             <a href="/payments/<%= payment.id %>"><%= number_to_currency(payment.amount_paid) %></a>
@@ -61,69 +65,66 @@
         </ul>
         <% end %>
       </dd>
-
     </dl>
   </div>
 </div>
 
-    <hr>
+<hr>
 
-    <div>
-    <form action="/create_payment" method="post">
-      <p> Add Payment </p>
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+<div>
+  <form action="/create_payment" method="post">
+    <p> Add Payment </p>
+    <!-- Hidden input for authenticity token to protect from forgery -->
+    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for paid_at -->
-      <div class="form-group">
-        <label for="paid_at" class="control-label">
-          Date Paid
-        </label>
-        <div class='input-group date' id='datetimepicker1'>
-          <input type="text" id="paid_at" name="paid_at" placeholder="When did you pay?" class="form-control">
-          <span class="input-group-addon">
-            <span class="glyphicon glyphicon-calendar"></span>
-          </span>
-        </div>
+    <!-- Label and input for paid_at -->
+    <div class="form-group">
+      <label for="paid_at" class="control-label">
+        Date Paid
+      </label>
+      <div class='input-group date' id='datetimepicker1'>
+        <input type="text" id="paid_at" name="paid_at" placeholder="When did you pay?" class="form-control">
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
       </div>
+    </div>
 
-      <!-- Label and input for amount_paid -->
-      <div class="form-group">
-        <label for="amount_paid" class="control-label">
-          Amount Paid
-        </label>
+    <!-- Label and input for amount_paid -->
+    <div class="form-group">
+      <label for="amount_paid" class="control-label">
+        Amount Paid
+      </label>
       <div class="input-group">
         <div class="input-group-addon">$</div>
         <input type="text" id="amount_paid" name="amount_paid" placeholder="What amount did you pay?" class="form-control" required>
       </div>
-      </div>
-
-      <!-- Label and input for bill_id -->
-      <input name="bill_id" type="hidden" value="<%= @bill.id %>">
-
-      <button class="btn btn-success">
-        Create Payment
-      </button>
-      or
-      <a href="/">Cancel</a>
-
-    </form>
     </div>
 
-    <hr>
+    <!-- Label and input for bill_id -->
+    <input name="bill_id" type="hidden" value="<%= @bill.id %>">
 
-    <div class="btn-group btn-group-justified">
-      <a href="/bills" class="btn btn-primary">
-        Back
-      </a>
-      <a href="/bills/<%= @bill.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_bill/<%= @bill.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
-    </div>
-  </div>
+    <button class="btn btn-success">
+      Create Payment
+    </button>
+    or
+    <a href="/">Cancel</a>
+
+  </form>
+</div>
+
+<hr>
+
+<div class="btn-group btn-group-justified">
+  <a href="/bills" class="btn btn-primary">
+    Back
+  </a>
+  <a href="/bills/<%= @bill.id %>/edit" class="btn btn-warning">
+    Edit
+  </a>
+  <a href="/delete_bill/<%= @bill.id %>" class="btn btn-danger" rel="nofollow">
+    Delete
+  </a>
 </div>
 
 <script type="text/javascript">

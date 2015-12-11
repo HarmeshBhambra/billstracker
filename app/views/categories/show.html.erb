@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h3>Category <%= @category.name %></h3>
+  <h3>Category: <%= @category.name %></h3>
 </div>
 
 <div class="row">
@@ -13,8 +13,8 @@
         <% @category.bills.each do |bill| %>
         <% if bill.user == current_user %>
           <li>
-            <%= bill.name %>
-            <%= number_to_currency(bill.amount) %>
+            <a href="/bills/<%= bill.id %>"><%= bill.name %></a>
+            : <%= number_to_currency(bill.amount) %>
           </li>
         <% end %>
         <% end %>

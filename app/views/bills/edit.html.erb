@@ -69,10 +69,10 @@
         </label>
         <div>
           <label class="checkbox-inline">
-            <input type="checkbox" id="yes" value="yes"> Yes
+            <input type="checkbox" id="Yes" value="Yes" name="recurring"> Yes
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" id="no" value="no"> No
+            <input type="checkbox" id="No" value="No" name="recurring"> No
           </label>
         </div>
       </div>
@@ -84,7 +84,7 @@
         </label>
 
         <div class='input-group date' id='datetimepicker1'>
-          <input name="due_at" type="text" class="form-control" id="due_at">
+          <input name="due_at" type="text" class="form-control" id="due_at" value="<%= @bill.due_at %>">
           <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
           </span>
@@ -120,6 +120,7 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker1').datetimepicker({format: 'DD/MM/YYYY', defaultDate: "10/12/2015"});
   });
+
 </script>

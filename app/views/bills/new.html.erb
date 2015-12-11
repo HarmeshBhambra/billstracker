@@ -18,7 +18,7 @@
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for user_id -->
+      <!-- Hidden input for user_id -->
       <div class="form-group">
         <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
       </div>
@@ -29,7 +29,7 @@
           Bill Name
         </label>
 
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @bill.name %>">
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control">
       </div>
 
       <!-- Label and input for category -->
@@ -48,7 +48,7 @@
           Company
         </label>
 
-        <input type="text" id="company" name="company" placeholder="Company" class="form-control" value="<%= @bill.company %>">
+        <input type="text" id="company" name="company" placeholder="Company" class="form-control">
       </div>
 
       <!-- Label and input for amount -->
@@ -58,7 +58,7 @@
         </label>
         <div class="input-group">
           <div class="input-group-addon">$</div>
-          <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control" value="<%= @bill.amount %>">
+          <input type="text" id="amount" name="amount" placeholder="Amount" class="form-control">
         </div>
      </div>
 
@@ -69,10 +69,10 @@
         </label>
         <div>
           <label class="checkbox-inline">
-            <input type="checkbox" id="yes" value="yes"> Yes
+            <input type="checkbox" id="Yes" value="Yes" name="recurring"> Yes
           </label>
           <label class="checkbox-inline">
-            <input type="checkbox" id="no" value="no"> No
+            <input type="checkbox" id="No" value="No" name="recurring"> No
           </label>
         </div>
       </div>
@@ -97,7 +97,7 @@
           Image
         </label>
 
-        <input type="file" id="image" name="image" placeholder="Image" class="form-control" value="<%= @bill.image %>">
+        <input type="file" id="image" name="image" placeholder="Image" class="form-control">
       </div>
 
       <!-- Label and input for notes -->
@@ -106,7 +106,7 @@
           Notes
         </label>
 
-        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"><%= @bill.notes %></textarea>
+        <textarea id="notes" name="notes" placeholder="Notes" class="form-control" rows="3"></textarea>
       </div>
 
       <button class="btn btn-success">
@@ -120,6 +120,6 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker1').datetimepicker({format: 'DD/MM/YYYY'});
   });
 </script>

@@ -1,7 +1,27 @@
 <style>
-  a {
+  .bill_name {
     color: white;
+    font-weight: bold;
   }
+
+  p {
+    color: white;
+    font-size: 75%;
+  }
+
+  .summary_month {
+    font-size: 90%;
+    font-style: italic;
+  }
+
+  table {
+    table-layout: fixed;
+  }
+
+  table th, table td {
+    overflow: hidden;
+  }
+
 </style>
 
 <div  class="page-header">
@@ -38,7 +58,12 @@
 <hr>
 
 <div name="calendar">
-  <p class="lead">Calendar of Bills (monthly summary)</p>
+  <h6>
+    <p class="lead">
+      Calendar of Bills (monthly summary by due date)
+    </p>
+  </h6>
+
   <div class="row">
   <form action="/">
     <div class="col-sm-10">
@@ -46,11 +71,14 @@
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
         <div class="form-group">
           <select class="form-control" id="month" name="month">
-            <option value="12">December</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
+          <% (@first_bill_due.due_at.year..@last_bill_due.due_at.year).each do |y| %>
+            <% @mo_start = (@first_bill_due.due_at.year == y) ? @first_bill_due.due_at.month : 1 %>
+            <% @mo_end = (@last_bill_due.due_at.year == y) ? @last_bill_due.due_at.month : 12 %>
+
+              <% (@mo_start..@mo_end).each do |m| %>
+              <option value="<%= m %>"><%= Date::MONTHNAMES[m] %></option>
+              <%end %>
+          <%end %>
           </select>
         </div>
     </div>
@@ -60,9 +88,15 @@
   </form>
   </div>
 
+  <h6>
+    <p class="lead summary_month">
+      Month summarized: <%= Date::MONTHNAMES[@mon.to_i] %> (green: fully paid bill, red: unpaid bill)
+    </p>
+  </h6>
+
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover table-responsive">
         <tr>
           <th colspan="2">#</th>
           <th colspan="2">Week 1</th>
@@ -71,146 +105,146 @@
           <th colspan="2">Week 4</th>
           <th colspan="2">Week 5</th>
         </tr>
-        <% current_user.bills.each do |bill| %>
+        <% @total_bills_mon.each do |bill| %>
         <tr>
           <td colspan="2">
           <%= @n + 1 %>
           </td>
           <td colspan="2">
-            <% if @week_1_bills_mon.include? bill %>
+            <% if @week_1_bills.include? bill %>
               <% @percentage_paid = (bill.payments.map{|item| item.amount_paid}.sum) / (bill.amount) %>
               <% if @percentage_paid != 1 %>
                 <div class="alert alert-danger" role="alert">
                   <h6>
-                  <a href="/bills/<%= bill.id %>">
-                    <%= bill.name %>
-                  </a>
-                  <small>
-                    <%= number_to_currency(bill.amount) %>
-                  </small>
+                    <a href="/bills/<%= bill.id %>" class="bill_name">
+                      <%= bill.name %>
+                    </a>
+                    <p>
+                      <%= number_to_currency(bill.amount) %>
+                    </p>
                   </h6>
                 </div>
               <% else %>
                 <div class="alert alert-success" role="alert">
                   <h6>
-                  <a href="/bills/<%= bill.id %>">
-                    <%= bill.name %>
-                  </a>
-                  <small>
-                    <%= number_to_currency(bill.amount) %>
-                  </small>
+                    <a href="/bills/<%= bill.id %>" class="bill_name">
+                      <%= bill.name %>
+                    </a>
+                    <p>
+                      <%= number_to_currency(bill.amount) %>
+                    </p>
                   </h6>
                 </div>
               <% end %>
             <% end %>
           </td>
           <td colspan="2">
-            <% if (@week_2_bills_mon.include? bill) %>
+            <% if (@week_2_bills.include? bill) %>
             <% @percentage_paid = (bill.payments.map{|item| item.amount_paid}.sum) / (bill.amount) %>
             <% if @percentage_paid != 1 %>
               <div class="alert alert-danger" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% else %>
               <div class="alert alert-success" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% end %>
             <% end %>
           </td>
           <td colspan="2">
-            <% if @week_3_bills_mon.include? bill %>
+            <% if @week_3_bills.include? bill %>
             <% @percentage_paid = (bill.payments.map{|item| item.amount_paid}.sum) / (bill.amount) %>
             <% if @percentage_paid != 1 %>
               <div class="alert alert-danger" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% else %>
               <div class="alert alert-success" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% end %>
             <% end %>
           </td>
           <td colspan="2">
-            <% if @week_4_bills_mon.include? bill %>
+            <% if @week_4_bills.include? bill %>
             <% @percentage_paid = (bill.payments.map{|item| item.amount_paid}.sum) / (bill.amount) %>
             <% if @percentage_paid != 1 %>
               <div class="alert alert-danger" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% else %>
               <div class="alert alert-success" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <small>
+                    <%= number_to_currency(bill.amount) %>
+                  </small>
                 </h6>
               </div>
             <% end %>
             <% end %>
           </td>
           <td colspan="2">
-            <% if @week_5_bills_mon.include? bill %>
+            <% if @week_5_bills.include? bill %>
             <% @percentage_paid = (bill.payments.map{|item| item.amount_paid}.sum) / (bill.amount) %>
             <% if @percentage_paid != 1 %>
               <div class="alert alert-danger" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% else %>
               <div class="alert alert-success" role="alert">
                 <h6>
-                <a href="/bills/<%= bill.id %>">
-                  <%= bill.name %>
-                </a>
-                <small>
-                  <%= number_to_currency(bill.amount) %>
-                </small>
+                  <a href="/bills/<%= bill.id %>" class="bill_name">
+                    <%= bill.name %>
+                  </a>
+                  <p>
+                    <%= number_to_currency(bill.amount) %>
+                  </p>
                 </h6>
               </div>
             <% end %>
@@ -224,19 +258,19 @@
             Subtotal
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_1_bills_mon.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_1_bills.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_2_bills_mon.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_2_bills.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_3_bills_mon.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_3_bills.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_4_bills_mon.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_4_bills.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_5_bills_mon.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_5_bills.map{|item| item.amount}.sum) %></div>
           </td>
         </tr>
         <tr>
@@ -252,3 +286,7 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+  $('.dropdown-toggle').dropdown()
+</script>

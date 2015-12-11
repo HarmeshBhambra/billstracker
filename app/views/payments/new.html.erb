@@ -50,7 +50,7 @@
           Bill
         </label>
 
-        <%= select_tag(:bill_id, options_from_collection_for_select(Bill.all, :id, :name, @payment.bill_id), :class => "form-control") %>
+        <%= select_tag(:bill_id, options_from_collection_for_select(Bill.where({:user_id => current_user.id}), :id, :name, @payment.bill_id), :class => "form-control") %>
         <a href="/bills/new">or add a new bill</a>
       </div>
 
@@ -75,6 +75,6 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#datetimepicker1').datetimepicker();
+    $('#datetimepicker1').datetimepicker({format: 'DD/MM/YYYY'});
   });
 </script>
