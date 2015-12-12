@@ -90,7 +90,7 @@
 
   <h6>
     <p class="lead summary_month">
-      Month summarized: <%= Date::MONTHNAMES[@mon.to_i] %> (green: fully paid bill, red: unpaid bill)
+      Month summarized: <%= Date::MONTHNAMES[@mon.to_i] %>. (green: fully paid bill, red: unpaid bill)
     </p>
   </h6>
 
@@ -258,19 +258,20 @@
             Subtotal
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_1_bills.map{|item| item.amount}.sum) %></div>
+
+            <div><%= number_to_currency(@week_1_bills.select{|bill| bill.due_at.mon.to_s === @mon.to_s}.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_2_bills.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_2_bills.select{|bill| bill.due_at.mon.to_s === @mon.to_s}.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_3_bills.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_3_bills.select{|bill| bill.due_at.mon.to_s === @mon.to_s}.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_4_bills.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_4_bills.select{|bill| bill.due_at.mon.to_s === @mon.to_s}.map{|item| item.amount}.sum) %></div>
           </td>
           <td colspan="2">
-            <div><%= number_to_currency(@week_5_bills.map{|item| item.amount}.sum) %></div>
+            <div><%= number_to_currency(@week_5_bills.select{|bill| bill.due_at.mon.to_s === @mon.to_s}.map{|item| item.amount}.sum) %></div>
           </td>
         </tr>
         <tr>

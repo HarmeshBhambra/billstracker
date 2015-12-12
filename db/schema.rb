@@ -11,13 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151208152422) do
-
-  create_table "bill_types", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type"
-  end
+ActiveRecord::Schema.define(version: 20151211234910) do
 
   create_table "bills", force: :cascade do |t|
     t.string   "image"

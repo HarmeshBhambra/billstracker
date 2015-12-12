@@ -16,23 +16,6 @@ Rails.application.routes.draw do
   get "/delete_category/:id", :controller => "categories", :action => "destroy"
   #------------------------------
 
-  # Routes for the Bill_type resource:
-  # CREATE
-  get "/bill_types/new", :controller => "bill_types", :action => "new"
-  post "/create_bill_type", :controller => "bill_types", :action => "create"
-
-  # READ
-  get "/bill_types", :controller => "bill_types", :action => "index"
-  get "/bill_types/:id", :controller => "bill_types", :action => "show"
-
-  # UPDATE
-  get "/bill_types/:id/edit", :controller => "bill_types", :action => "edit"
-  post "/update_bill_type/:id", :controller => "bill_types", :action => "update"
-
-  # DELETE
-  get "/delete_bill_type/:id", :controller => "bill_types", :action => "destroy"
-  #------------------------------
-
   # Routes for the Calendar resource:
   get "/", :controller => "calendars", :action => "index"
 
